@@ -5,7 +5,13 @@
     <title>javascript基础-this关键字</title>
 </head>
 <body>
+<input type="text" name="age" size=3 onChange="validate(this,18,99)">
 <script>
+    function  validate(obj,lowval,hival) {
+        if((obj.value<lowval) || (obj.value>hival)){
+            console.log("Invalid Value!");
+        }
+    }
     //this返回属性或方法当前所在的对象
     /*
      var person={
@@ -32,15 +38,19 @@
      document.write(A.describe()+'<br/>');
      document.write(B.describe());
     * */
-    var A = {
+    /**
+     var A = {
         name: '张三',
         describe: function () {
             return '姓名：'+ this.name;
         }
-    };
-    var name = '李四';
-    var f = A.describe;
-    document.write(f())
+      };
+     var name = '李四';
+     var f = A.describe;
+     document.write(f());
+     */
+
+
 
 </script>
 
