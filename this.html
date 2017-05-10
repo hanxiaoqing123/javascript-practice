@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript基础-this关键字</title>
+</head>
+<body>
+<script>
+    //this返回属性或方法当前所在的对象
+    /*
+     var person={
+     name:'张三',
+     describe:function () {
+     return '姓名：'+this.name;
+     }
+     };
+     document.write(person.describe());
+    * */
+    /*
+     this的指向是可变的
+     function f() {
+     return '姓名：'+this.name;
+     }
+     var A={
+     name:'张三',
+     describe:f
+     };
+     var B={
+     name:'李四',
+     describe:f
+     };
+     document.write(A.describe()+'<br/>');
+     document.write(B.describe());
+    * */
+    var A = {
+        name: '张三',
+        describe: function () {
+            return '姓名：'+ this.name;
+        }
+    };
+    var name = '李四';
+    var f = A.describe;
+    document.write(f())
+
+</script>
+
+</body>
+</html>
