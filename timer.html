@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript基础-定时器</title>
+</head>
+<body>
+<input type="button" value="stop" onclick="clearInterval(timer)">
+<script>
+    /*
+    1.setTimeout() 只执行一次
+     function f() {
+     console.log(2);
+
+     }
+     console.log(1);
+     setTimeout(f,1000);
+     console.log(3);
+    * */
+
+    //setInterval() 无限次的定时执行
+    var i=1;
+    var timer=setInterval(function () {
+        console.log(2);
+    },1000)
+
+</script>
+
+</body>
+</html>

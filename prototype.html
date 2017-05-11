@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript基础-prototype属性</title>
+</head>
+<body>
+<script>
+    //原型上的所有属性和方法，都能被派生对象共享
+    function Animal(name) {
+        this.name=name;
+    }
+    Animal.prototype.color="white";
+    var cat1=new Animal('大毛');
+    var cat2=new Animal('二毛');
+    document.write(cat1.color+"<br/>");
+    document.write(cat2.color);
+
+</script>
+
+</body>
+</html>
