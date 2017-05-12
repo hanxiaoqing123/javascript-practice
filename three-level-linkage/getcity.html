@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>城市三级联动</title>
+    <script src="jquery-1.8.3.js"></script>
+</head>
+<body>
+<select name="province" >
+    <option value="0">请选择</option>
+</select>
+<select name="city" >
+    <option value="0">请选择</option>
+</select>
+<select name="area" >
+    <option value="0">请选择</option>
+</select>
+<script >
+    //注意：每次重新选择上一级后，其下一级必须要先清空，再重新呈现内容
+    $(function () {
+        //一级：将所有的省全部呈现
+        $.ajax({
+            'url':'getcity.php',
+            'type':'post',
+            'dataType':'json',
+            'data':'fid=0',
+            'success':function (re) {
+              var province=$("[name='province']");
+              for(key in re){
+                  province.append("<option value="+re[key].id+">"+re[key].cname+"</option>");
+                  //二级：根据所选省，呈现市
+                  province.change(function () {
+                      var pvalue=$(this).val();
+                      var city=$("[name='city']");
+                      if(pvalue==0){
+                          city.empty();
+                          city.append(" <option value='0'>请选择</option>");
+                      }else{
+                          $.ajax({
+                              'url': 'getcity.php',
+                              'type': 'post',
+                              'dataType': 'json',
+                              'data': 'fid='+pvalue,
+                              'success': function (re1) {
+                                  city.empty();
+                                  city.append(" <option value='0'>请选择</option>");
+                                  for(key1 in re1){
+                                      city.append(" <option value="+re1[key1].id+">"+re1[key1].cname+"</option>");
+                                  }
+                                  //三级：根据所选市，呈现县
+                                  city.change(function () {
+                                      var cvalue=$(this).val();
+                                      var area=$("[name='area']");
+                                      if(cvalue==0){
+                                          area.empty();
+                                          area.append(" <option value='0'>请选择</option>");
+                                      }else{
+                                          $.ajax({
+                                              'url': 'getcity.php',
+                                              'type': 'post',
+                                              'dataType': 'json',
+                                              'data': 'fid='+cvalue,
+                                              'success': function (re2) {
+                                                  area.empty();
+                                                  area.append(" <option value='0'>请选择</option>");
+                                                  for(key2 in re2){
+                                                      area.append(" <option value="+re2[key2].id+">"+re2[key2].cname+"</option>");
+                                                  }
+                                              }
+                                          });
+                                      }
+                                  });
+                              }
+                          });
+                      }
+                  });
+              }
+            }
+        });
+    });
+    
+</script>
+
+</body>
+</html>
