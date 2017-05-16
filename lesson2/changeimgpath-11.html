@@ -38,11 +38,33 @@
      #box li.first,#box li.first img{width:156px;height:156px;}
      #box li.first div{
          position:absolute;top:0;left:0;width:156px;height:156px;display:none;opacity:0.5;filter:alpha(opacity=50);
-         background:#fff url(img/loading.gif) 50% 50% no-repeat;}
-
+         background:#fff url(img/loading.gif) 50% 50% no-repeat;
+     }
     </style>
-    <script>
-
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+            var oImg = document.getElementById("box").getElementsByTagName("img");
+            var oDiv = document.getElementsByTagName("div")[0];
+            for (var i = 1; i < oImg.length; i++)
+            {
+                oImg[i].onmouseover = function ()
+                {
+                    //创建一个Image对象：var a=new Image();    定义Image对象的src: a.src=”xxx.gif”;    这样做就相当于给浏览器缓存了一张图片
+                    var img = new Image();
+                    img.src = oImg[0].src = this.src.replace(/small/,"big");
+                    oDiv.style.display = "block";
+                    /*
+                     *
+                     complete 属性可返回浏览器是否已完成对图像的加载:
+                     可以通过Image对象的complete 属性来检测图像是否加载完成（每个Image对象都有一个complete属性，当图像处于
+                     装载过程中时，该属性值false,当发生了onload、onerror、onabort中任何一个事件后，则表示图像装载过程结束（不管成
+                     没成功），此时complete属性为true）
+                     */
+                    img.complete ? oDiv.style.display = "none" : (oImg[0].onload = function() {oDiv.style.display = "none"})
+                }
+            }
+        };
     </script>
 </head>
 <body>
