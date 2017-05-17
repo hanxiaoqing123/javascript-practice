@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复选框</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font:12px/1.5 Tahoma;
+        }
+        dl{
+            width: 120px;
+            overflow: hidden;
+            zoom: 1;
+            border: 1px solid #666;
+            padding: 10px 5px;
+            border-radius: 5px;
+            margin: 10px auto;
+            background: #fafafa;
+        }
+        label{
+            padding: 0 10px  0 5px;
+            cursor: default;
+        }
+        div{
+            text-align: center;
+        }
+        label, input, a{
+            vertical-align: middle;
+        }
+        a{
+            color: #09f;
+            text-decoration: none;
+        }
+        a:hover{
+            color: red;
+        }
+        dt{
+            border-bottom: 1px solid #666;
+            padding-bottom: 10px;
+        }
+        dt label{
+            /*font-weight 设置文本的粗细，400 等同于 normal，而 700 等同于 bold*/
+            font-weight: 700;
+        }
+        p{
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var oA=document.getElementsByTagName("a")[0];
+            var oLabel=document.getElementsByTagName("label")[0];
+            var oInput=document.getElementsByTagName("input");
+            var isCheckAll=function () {
+                  for(var i=1,n=0;i<oInput.length;i++){
+                      //用于统计oInput的选中个数
+                        oInput[i].checked && n++;
+                        /*
+                         if(oInput[i].checked){
+                             n++;
+                         }
+                        * */
+                  }
+                  //判断选中个数n是否等于oInput的个数-1(排除全选/全部选)，如果相等那么全选也是要勾上的，反之不用勾上
+                 oInput[0].checked=n==oInput.length-1;
+                 oLabel.innerHTML=oInput[0].checked?"全不选":"全选";
+            };
+            //全选/全不选
+            oInput[0].onclick=function () {
+                for(var i=1;i<oInput.length;i++){
+                    oInput[i].checked=this.checked;
+                }
+                isCheckAll();
+            };
+            //反选
+            oA.onclick=function () {
+                for(var i=1;i<oInput.length;i++){
+                   oInput[i].checked=!oInput[i].checked;
+                }
+                isCheckAll();
+            };
+            //根据复选个数更新全选框状态
+            for(var i=1;i<oInput.length;i++){
+              oInput[i].onclick=function () {
+                isCheckAll();
+              }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<dl>
+    <dt><input type="checkbox" id="checkAll" /><label>全选</label><a href="javascript:;">反选</a></dt>
+    <dd>
+        <p><input type="checkbox" name="item" /><label>选项（一）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（二）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（三）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（四）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（五）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（六）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（七）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（八）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（九）</label></p>
+        <p><input type="checkbox" name="item" /><label>选项（十）</label></p>
+    </dd>
+</dl>
+<div>1、切换全选/全不选文字；2、根据选中个数更新全选框状态；</div>
+
+</body>
+</html>
