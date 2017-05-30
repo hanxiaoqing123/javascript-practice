@@ -3,11 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <title>网页计算器</title>
+    <style>
+       *{
+           margin : 0;
+           padding: 0;
+       }
+        ul{
+            list-style-type: none;
+        }
+        a{
+            color: #fff;
+            outline:none;
+            text-decoration: none;
+        }
+        body{
+            font: 700 24px/1.5 Arial;
+        }
+        #calc{
+            position: relative;
+            width: 300px;
+            background: #000;
+            margin: 10px auto;
+        }
+        #calc p{
+            color: #fff;
+            text-align: right;
+            padding: 0 5px;
+            font: 12px/20px Arial;
+        }
+        #calc .f-text{
+            border: 1px solid red;
+            width: 290px;
+            height: 84px;
+            text-align: right;
+            font:700 50px/84px Arial;
+            background: url(img/inputBg.jpg) repeat-x;
+            padding: 0 5px;
+        }
+        #calc ul{
+            position: relative;
+            overflow: hidden;
+            zoom: 1;
+            padding: 0 0 17px 8px;
+            background: url(img/bg.jpg);
+        }
+        #calc ul li{
+            float : left;
+            width : 63px;
+            height: 41px;
+            margin: 17px 10px 0 0;
+        }
+       #calc ul li a{
+           display: block;
+           width : 63px;
+           height: 41px;
+           line-height: 41px;
+           text-align: center;
+           background: url(img/btn.png) no-repeat;
+       }
+       #calc ul li a:hover{
+           background-position:-63px 0;
+       }
+       #calc ul li.btn-1 a{
+           background-position: 0 -41px;
+       }
+       #calc ul li.btn-1 a:hover{
+           background-position:-63px -41px;
+       }
+       #calc ul li.btn-2{
+           position: absolute;
+           top   : 174px;
+           right : 0;
+           height: 99px;
+       }
+       #calc ul li.btn-2 a{
+           height: 99px;
+           line-height: 99px;
+           background-position: 0 -164px;
+       }
+       #calc ul li.btn-2 a:hover{
+           background-position: -63px -164px;
+       }
+       #calc ul li.btn-3 {
+           width: 136px;
+       }
+       #calc ul li.btn-3 a{
+           width: 136px;
+           background-position: 0 -82px;
+       }
+       #calc ul li.btn-3 a:hover{
+           background-position: 0 -123px;
+       }
+       #formula{
+            position: absolute;
+            background:none ;
+            top:20px;
+            width: 280px;
+            padding: 3px 15px 0 5px;
+            border: 0;
+            text-align: right;
+            font: 700 12px/1.5 Arial;
+       }
+    </style>
 </head>
 <body>
+<script>
+    window.onload=function () {
+        var oCal=document.getElementById("calc");
+        var oA=oCal.getElementsByTagName("a");
+        var oInput=document.getElementsByTagName("input")[0];
+        var oFormula=document.getElementById("formula");
+        var s=false;
+        for(var i=0;i<oA.length;i++){
+            oA[i].onfocus=function () {
+                this.blur();
+            };
+            oA[i].onclick=function () {
+                switch(this.innerHTML){
+                    case "c":
+                        oInput.value   =  0;
+                        oFormula.value = "";
+                        break;
+                    case "%":
+                        count("%");
+                        break;
+                    case "÷":
+                        count("/");
+                        break;
+                    case "×":
+                        count("*");
+                        break;
+                    case "-":
+                        count("-");
+                        break;
+                    case "+":
+                        count("+");
+                        break;
+                    case "=":
+                        s || (oFormula.value+=oInput.value);
+                        oInput.value=eval(oFormula.value.replace(/\%\/\+\-\*/),'');
+                        oInput.value=oInput.value.substr(0,10).replace("NaN",0);
+                        s=true;
+                        break;
+
+                    case ".":
+                        if(oInput.value.search(/[\.\%\/\*\+\-]/) != -1)
+                        break;
+
+                    default:
+                        s && (oInput.value=0,oFormula.value="",s=false);
+                        oInput.value.length<10 && (oInput.value=(oInput.value+this.innerHTML).replace(/^[0\%\/\+\-\*](\d)/,"$1"));
+                }
+            }
+        }
+        function count(a) {
+            if(s){
+               oFormula.value=oInput.value+a;
+               oInput.value=a;
+               s=false;
+            }else{
+                /[\%\/\+\-\*]/.test(oInput.value) || (oFormula.value+=oInput.value);
+                oInput.value=a;
+                /[\%\/\+\-\*]/.test(oFormula.value) || (oFormula.value+=oInput.value);
+                oFormula.value= oFormula.value.slice(-1)!= a ?oFormula.value.replace(/.$/,a) :oFormula.value;
+            }
+        }
+    }
+</script>
 <div id="calc">
     <p>By - Hxq</p>
-    <input type="text" readonly="readonly" class="f-text" maxlength="9" value="0"/>
+    <input class="f-text" type="text" readonly="readonly" class="f-text" maxlength="9" value="0"/>
     <ul>
         <li class="btn-1"><a href="javascript:;">c</a></li>
         <li class="btn-1"><a href="javascript:;">%</a></li>

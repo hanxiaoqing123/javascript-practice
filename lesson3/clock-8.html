@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简易网页闹钟</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            color: #fff;
+            font: 16px/1.5 Tahoma;
+        }
+        #clock{
+            width: 300px;
+            text-align: center;
+            background:#1a1a1a;
+            margin: 10px auto;
+            padding: 20px 0;
+        }
+        span{
+            width: 80px;
+            color: #000;
+            line-height: 2;
+            background: #fbfbfb;
+            border:2px solid #b4b4b4 ;
+            margin: 0 10px;
+            padding: 0 10px;
+
+        }
+    </style>
+</head>
+<body>
+<script>
+    window.onload=function () {
+        var oClock=document.getElementById("clock");
+        var oSpan=document.getElementsByTagName("span");
+        function getTimes() {
+            var dateObj=new Date();
+            /*此处约等同于下面的处理方式，但是1位数字前面没有0的显示，格式需要调整
+            *oSpan[0].innerHTML=dateObj.getHours();
+             oSpan[1].innerHTML=dateObj.getMinutes();
+             oSpan[2].innerHTML=dateObj.getSeconds();
+            * */
+
+
+            var oDate=[dateObj.getHours(),dateObj.getMinutes(),dateObj.getSeconds()];
+            for(var i in oDate){
+                oSpan[i].innerHTML=format(oDate[i]);
+            }
+
+        }
+        function format(a) {
+            return a.toString().replace(/^(\d)$/,"0$1");
+        }
+        getTimes();
+        setInterval(getTimes,1000);
+    }
+</script>
+<div id="clock">
+    <span></span>点<span></span>分<span></span>秒
+</div>
+
+</body>
+</html>
