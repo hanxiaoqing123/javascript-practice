@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图</title>
+	<script src='jquery_1.9.js'></script>
+	<style>
+		#img{
+			width: 490px;
+			height: 170px;
+			margin: 10px auto;
+			position: relative;
+		}
+		#img>div{
+			width: 100%;
+			height: 100%;
+		}
+		.img{
+			width: 100%;
+			height: 100%;
+			display: none;
+		}
+		#img>ul{
+			position: absolute;
+			bottom: -16px;
+			right: 10px;
+		}
+		#img>ul>li{
+			list-style: none;
+			float: left;
+			width: 20px;
+			height: 20px;
+			background: gray;
+			margin-left:7px;
+			text-align: center;
+			line-height: 20px; 
+			border-radius: 50%;
+			color: #fff;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.clear{
+			clear: both;
+			overflow: hidden;
+		}
+	</style>
+	<script>
+		$(function(){
+				init();
+		});
+		//初始化
+		function init(){
+			var img=$('.img');
+			var html='';
+			for(var i=0;i<img.length;i++){
+				html+="<li onmouseover='change_img("+i+")'  onmouseout='reStart("+i+")'>"+(i+1)+"</li>";
+			}
+			$('#img>ul').append().html(html);
+			$('.img').first().show();
+			$('#img>ul>li').first().css('background','#f80');
+		}
+		var j=0;
+		var t;
+		//调用
+		function change_img(num){
+			var img=$('.img');
+			if(num=='auto'){
+				num=j;
+			}else{
+				clearInterval(t);
+				}
+				 $('.img').eq(num).show();
+				 $('.img').eq(num).siblings().hide();
+				 $('#img>ul>li').eq(num).css('background','#f80');
+				  $('#img>ul>li').eq(num).siblings().css('background','gray');
+				j++;
+				 if(j>=img.length){
+				  	j=0;
+				  }
+			}
+			//自动调用
+			t=setInterval('change_img("auto")',2000);
+			//再次调用
+			function reStart(num){
+				j=num;
+				t=setInterval('change_img("auto")',2000);
+			}
+	</script>
+</head>
+<body>
+	<div id="img">
+		<div>
+			<img class="img" src="./img/01.jpg"/>
+			<img class="img" src="./img/02.jpg"/>
+			<img class="img" src="./img/03.jpg"/>
+			<img class="img" src="./img/04.jpg"/>
+			<img class="img" src="./img/05.jpg"/>
+			<img class="img" src="./img/06.jpg"/>
+			<img class="img" src="./img/03.jpg"/>
+		</div>
+		<ul class="clear">
+			
+		</ul>
+	</div>
+</body>
+</html>
