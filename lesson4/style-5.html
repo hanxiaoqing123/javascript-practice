@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css函数-设置/读取用户的属性</title>
+    <style>
+        #box{
+            border: 1px solid #f60;
+            width: 400px;
+            height: 200px;
+            background:#fef4eb;
+            margin: 0 auto;
+        }
+        input{
+            border: 0;
+            background: #f60;
+            color: #fff;
+            padding: 2px 4px;
+            margin: 10px 0 0 10px;
+
+        }
+    </style>
+    <script type="text/javascript">
+        function css(obj,attr,value) {
+            //currentStyle返回的是元素当前应用的最终CSS属性值（包括外链CSS文件，页面中嵌入的<style>属性等）
+            //getComputedStyle是一个可以获取当前元素所有最终使用的CSS属性值,该方法是只读的，只能获取样式，不能设置
+            switch (arguments.length){
+                case 2:
+                    //如果总共传递2个参数，第二个参数是对象，则设置属性
+                    if(typeof  arguments[1] == "object"){
+                        for(var i in attr){
+                            obj.style[i]=attr[i];
+                        }
+                    }else{
+                        //如果总共传递2个参数，第二个参数是字符串，则读取属性
+                        return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,null)[attr];
+                    }
+                    break;
+                case 3:
+                    //如果总共传递3个参数,单一设置属性
+                    obj.style[attr]=value;
+                    break;
+                default:
+                    alert("参数错误！");
+            }
+        }
+        window.onload=function () {
+            //点击事件
+            var oBox=document.getElementById("box");
+            var oInput=oBox.getElementsByTagName("input");
+            //获取属性 getstyle
+            oInput[0].onclick=function () {
+                alert("width:"+css(oBox,"width")+"\nheight:"+css(oBox,"height")+"\nbackground-color:"+css(oBox,"backgroundColor"));
+            };
+            //设置属性
+            oInput[1].onclick=function () {
+                css(oBox,{width:"330px",height:"100px",borderColor:"#0084ff",backgroundColor:"#eff8ff"});
+                //设置input按钮背景颜色
+                for(var i=0 ;i<oInput.length;i++){
+                    css(oInput[i],'backgroundColor',"#0084ff");
+                }
+            };
+            //单一设置属性
+            oInput[2].onclick=function (){
+                css(oBox,{width:"400px",height:"200px",borderColor:"#f60",backgroundColor:"#fef4eb"});
+                //设置input按钮背景颜色
+                for(var i=0 ;i<oInput.length;i++){
+                   css(oInput[i],'backgroundColor',"#f60");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="box">
+    <input type="button" value="Get Style"/>
+    <input type="button" value="Set Style"/>
+    <input type="button" value="Default Style"/>
+</div>
+
+</body>
+</html>
