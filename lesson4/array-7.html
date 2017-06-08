@@ -10,15 +10,56 @@
         window.onload=function () {
             var oDiv=document.getElementsByTagName("div");
             var oInput=document.getElementsByTagName("input");
-            var bS1=bS2=true;
+            var bS1= bS2 =true;
             var oTmp=[];
             //删除/添加第一项
             oInput[0].onclick=function () {
-                oTmp=getArray(oDiv[0].innerHTML);
-                //删除第一项 shift()
+                //先将div中的内容转化为数组
+               oTmp=getArray(oDiv[0].innerHTML);
                 bS1 ?
-                    oTmp.shift(),this.value=this.value.replace("删除","添加"),bS1=false
+                //删除第一项 shift()
+                (oTmp.shift(),this.value=this.value.replace("删除","添加"),bS1=false):
+                //添加第一项 unshift()
+                (oTmp.unshift("January(1)"),this.value=this.value.replace("添加","删除"),bS1=true);
+                oDiv[0].innerHTML=oTmp.join();
+            };
+            //删除/添加最后一项
+            oInput[1].onclick=function () {
+                //先将div中的内容转化为数组
+                oTmp=getArray(oDiv[0].innerHTML);
+                bS2 ?
+                    //删除最后一项 pop()
+                    (oTmp.pop(),this.value=this.value.replace("删除","添加"),bS2=false):
+                    //添加最后一项 push()
+                    (oTmp.push("December(12)"),this.value=this.value.replace("添加","删除"),bS2=true);
+                oDiv[0].innerHTML=oTmp.join();
+            };
+            //复制
+            oInput[2].onclick=function () {
+                //先将div中的内容转化为数组
+                oTmp=getArray(oDiv[1].innerHTML);
+                oDiv[1].innerHTML=oTmp.concat(oTmp).toString().replace(/\s/g,"");
+            };
+            //还原
+            oInput[3].onclick=function () {
+                oTmp=getArray(oDiv[1].innerHTML);
+                //length属性是可写的。如果人为设置一个小于当前成员个数的值，该数组的成员会自动减少到length设置的值
+                oTmp.length=10;
+                oDiv[1].innerHTML=oTmp.join();
+
+            };
+
+            //将div中的内容转化为数组 str为div对象
+            function  getArray(str) {
+               oTmp.length=0;
+               str=str.split(",");
+               for(var i in str){
+                    oTmp.push(str[i]);
+               }
+                return oTmp;
             }
+
+
         }
     </script>
 </head>
