@@ -12,6 +12,9 @@
             var oInput=document.getElementsByTagName("input");
             var bS1= bS2 =true;
             var oTmp=[];
+            /*
+            * 1.第一组按钮功能
+            * */
             //删除/添加第一项
             oInput[0].onclick=function () {
                 //先将div中的内容转化为数组
@@ -34,6 +37,9 @@
                     (oTmp.push("December(12)"),this.value=this.value.replace("添加","删除"),bS2=true);
                 oDiv[0].innerHTML=oTmp.join();
             };
+            /*
+             * 2.第二组按钮功能
+             * */
             //复制
             oInput[2].onclick=function () {
                 //先将div中的内容转化为数组
@@ -48,7 +54,45 @@
                 oDiv[1].innerHTML=oTmp.join();
 
             };
+            /*
+             * 3.第三组按钮功能
+             * */
+            //还原
+            oInput[4].onclick=function () {
+                oTmp=["red","green","blue","white","yellow","black","brown"];
+                oDiv[2].innerHTML=oTmp.join();
+            };
 
+            //删除前三项
+            oInput[5].onclick=function () {
+                //先将div中的内容转化为数组
+                oTmp=getArray(oDiv[2].innerHTML);
+                oTmp.splice(0,3);
+                oDiv[2].innerHTML=oTmp.join();
+            };
+
+            //删除第二至三项
+            oInput[6].onclick=function () {
+                oTmp=getArray(oDiv[2].innerHTML);
+                oTmp.splice(1,2);
+                oDiv[2].innerHTML=oTmp.join();
+            };
+            //在第二项后插入(orange, purple)
+            oInput[7].onclick=function () {
+                oTmp=getArray(oDiv[2].innerHTML);
+                oTmp.splice(1,0,"orange","purple");
+                oDiv[2].innerHTML=oTmp.join();
+
+            };
+            //替换第二项和第三项
+            oInput[8].onclick=function () {
+                oTmp=getArray(oDiv[2].innerHTML);
+                oTmp.splice(1,2, "#009900", "#0000ff");
+                oDiv[2].innerHTML=oTmp.join();
+
+            };
+
+            /*公共函数*/
             //将div中的内容转化为数组 str为div对象
             function  getArray(str) {
                oTmp.length=0;
