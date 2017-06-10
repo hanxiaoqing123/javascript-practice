@@ -2,45 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>评分</title>
+    <title>星级评分系统</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            font: 12px/1.5 Arial;
-            color: #666;
-        }
-        #star{position: relative;width: 600px;margin: 10px auto;height: 100px;}
+        *{margin: 0; padding: 0;}
+        body{font: 12px/1.5 Arial;color: #666; }
+        #star{position: relative;width: 600px;margin: 10px auto;}
         ul{list-style-type: none;}
-        #star span,#star ul{
-            float: left;
-            display: inline;
-            height: 19px;
-            line-height: 19px;
-        }
+        #star span,#star ul{line-height: 19px;height: 19px; float: left;display: inline;}
         #star ul{margin: 0 10px;}
-        /*字体隐藏：text-indent:-9999px; （注意：只能用于block，table cells和inline-block）*/
-        #star ul li{float: left;width: 24px;cursor:pointer;text-indent: -9999px;background: url(img/star.png) no-repeat}
-        #star li.on{
-            background-position:0 -28px;
+        #star li{
+            float: left;
+            width: 24px;
+            text-indent: -9999px;
+            cursor: pointer;
+            background: url(img/star.png) no-repeat;
         }
+        #star strong{color:#f60;padding-left: 10px ; }
+        #star li.on{background-position: 0 -28px;}
+        /*icon.gif：width 179ox height 67px*/
         #star p{position:absolute;top:20px;width:159px;height:60px;display:none;background:url(img/icon.gif) no-repeat;padding:7px 10px 0;}
         #star p em{color:#f60;display:block;font-style:normal;}
-        strong{
-            color: #f60;
-            margin-left: 10px;
-        }
+
     </style>
-    <script>
+    <script type="text/javascript">
         window.onload=function () {
             var oStar=document.getElementById("star");
             var oSpan=document.getElementsByTagName("span");
             var oUl=document.getElementsByTagName("ul")[0];
             var oLi=oUl.getElementsByTagName("li");
             var oP=document.getElementsByTagName("p")[0];
-            var iScore=iStar=0;
+            var iStar=iScore=0;
             var oMsg=[
                 "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
                 "不满意|部分有破损，与卖家描述的不符，不满意",
@@ -49,44 +40,45 @@
                 "很满意|质量非常好，与卖家描述的完全一致，非常满意",
             ];
             for(var i=1;i<=oLi.length;i++){
+                //给索引附值
                 oLi[i-1].index=i;
-                //鼠标移过，显示分数
+                //鼠标划入后显示浮动层以及文字内容
                 oLi[i-1].onmouseover=function () {
                     fnPoint(this.index);
+                    //浮动层显示
                     oP.style.display="block";
-                    /*
-                    * 1.offsetWidth实际获取的是盒模型(width+border + padding), offsetLeft = left + marginLeft
-                    * 2.父div的position定义为relative,子div的position定义为absolute，
-                    *   那么子div的style.left的值是相对于父div的值，这同offsetLeft是相同的
-                    * 3.区别：style.left 返回的是字符串,offsetLeft返回的是数值
-                    * */
+                    //浮动层的位置
                     oP.style.left=oUl.offsetLeft+this.index*this.offsetWidth-104+"px";
-                    //匹配浮动层文字内容
-                    oP.innerHTML="<em><b>"+this.index+"</b>分 "+oMsg[this.index-1].match(/(.+)\|/)[1]+"</em>"+oMsg[this.index-1].match(/\|(.+)/)[1];
+                    //浮动层的文字内容
+                    //正则 “| ” 他的意思就是 “或 ”
+                    oP.innerHTML="<em><b>"+this.index+" 分 </b>"+oMsg[this.index-1].match(/(.+)\|/)[1]+"</em>"+
+                    oMsg[this.index-1].match(/\|(.+)/)[1];
+
                 };
                 //鼠标离开后恢复上次评分
                 oLi[i-1].onmouseout=function () {
                     fnPoint();
-                    //关闭浮动层
                     oP.style.display="none";
                 };
-                //点击后进行评分处理
+                //鼠标点击后 右边出现分数以及文字
                 oLi[i-1].onclick=function () {
                     iStar=this.index;
+                    //此处也会发生mouseover事件
                     oP.style.display="none";
-                    oSpan[1].innerHTML="<strong>"+this.index+"分 </strong>("+oMsg[this.index-1].match(/\|(.+)/)[1]+")";
-                }
-            }
-            //评分处理
-            function fnPoint(iArg) {
-                //分数赋值：这个运算经常用来判断一个变量是否已定义，如果没有定义iArg就给他一个初始值 iStar，这在给函数的参数定义一个默认值的时候比较有用
-                iScore=iArg || iStar;
-                for(var i=0;i<oLi.length;i++){
-                    oLi[i].className=i<iScore?"on":"";
+                    oSpan[1].innerHTML="<strong>"+this.index+" 分</strong>"+"("+ oMsg[this.index-1].match(/\|(.+)/)[1]+")";
+
                 }
             }
 
-        }
+            //评分出炉
+            function fnPoint(iArg) {
+                //分数赋值：这个运算经常用来判断一个变量是否已定义，如果没有定义iArg就给他一个初始值 iStar，这在给函数的参数定义一个默认值的时候比较有用
+                var iScore=  iArg || iStar;
+                for(var i=0;i<oLi.length;i++){
+                    oLi[i].className=i<iScore? "on":"";
+                }
+            }
+        };
     </script>
 </head>
 <body>
@@ -99,8 +91,8 @@
         <li><a href="javascript:;">4</a></li>
         <li><a href="javascript:;">5</a></li>
     </ul>
-    <span></span>
     <p></p>
+    <span></span>
 </div>
 
 </body>
