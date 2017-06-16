@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>完美拖曳</title>
+    <style>
+        *{margin: 0;padding: 0}
+        body{font: 12px/1.5 Tahoma;background: #000;color: #fff;}
+        #box{position: absolute;top: 50%;left: 50%;width: 300px;height: 150px;background: #333;margin: -75px 0 0 -150px;border: 2px solid #ccc;}
+        #box h2{height: 25px;background: #222;padding: 0 10px;border-bottom: 2px solid #ccc;text-align: right;cursor: move;}
+        #box a{text-decoration:none;color: #fff;outline: none;font: 12px/25px Arial;vertical-align:100%}
+        #box p{margin-top: 10px;padding: 0 10px;}
+        span{color: #ff0;padding-left: 10px;}
+    </style>
+    <script type="text/javascript">
+        window.onload=function () {
+            var oBox=document.getElementById("box");
+            var oH2=document.getElementsByTagName("h2")[0];
+            var oA=document.getElementsByTagName("a")[0];
+        }
+    </script>
+</head>
+<body>
+<div id="box">
+    <h2><a href="javascript:;">点击回放拖动轨迹</a></h2>
+    <p><strong>Drag:</strong><span></span></p>
+    <p><strong>offsetTop</strong><span></span></p>
+    <p><strong>offsetLeft</strong><span></span></p>
+</div>
+
+</body>
+</html>
