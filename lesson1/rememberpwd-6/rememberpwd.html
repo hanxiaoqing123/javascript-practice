@@ -4,25 +4,11 @@
     <meta charset="UTF-8">
     <title>记住密码提示框</title>
     <style>
-        body input{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            font:12px/1.5 Tahoma;
-        }
-        #outer{
-            width: 200px;
-            margin: 10px auto;
-
-        }
-        #tips{
-            margin-top: 5px;
-            padding: 5px;
-            background: #ffefa4;
-            border:1px solid #f90;
-            display: none;
-        }
+        *{ margin: 0;padding: 0; }
+        body{font:12px/1.5 Tahoma;}
+        #outer{ width: 200px; margin: 10px auto;}
+        input{ margin-right:5px;vertical-align:middle; }
+        #tips{ margin-top: 5px; padding: 5px;   background: #ffefa4;  border:1px solid #f90; display: none; }
     </style>
     <script>
       window.onload=function () {
@@ -30,7 +16,7 @@
           var oLabel=document.getElementsByTagName("label")[0];
           oLabel.onmouseover=function () {
               oTips.style['display']='block';
-          }
+          };
           oLabel.onmouseout=function () {
               oTips.style['display']='none';
           }
